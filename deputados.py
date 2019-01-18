@@ -3,7 +3,7 @@ class Deputados:
     def __init__(self):
         self.endpoint = "https://dadosabertos.camara.leg.br/api/v2/deputados?"
 
-    def lista(self, tipo = 'json', **kwargs):
+    def lista(self, tipo = 'json', **parametros):
         """lista todos os deputados da legislatura atual.
 
         Parameters
@@ -37,16 +37,9 @@ class Deputados:
 
         tipo = tipo
         endpoint = self.endpoint
-        parametros = []
         dados = ''
 
-        for parametro in kwargs:
-            parametros.append(parametro +"="+kwargs[parametro])
-
-        endpoint_parametros = "&".join(parametros)
-        url = endpoint+endpoint_parametros
-
-        r = requests.get(url)
+        r = requests.get(endpoint, params=parametros)
         retorno = r.json()
 
         if tipo == 'pdf':
